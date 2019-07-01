@@ -1,0 +1,14 @@
+C:\Portal\git\ConstructionEquipmentRental\GatewayApi\bin\Debug\netcoreapp2.2\GatewayApi.deps.json
+C:\Portal\git\ConstructionEquipmentRental\GatewayApi\bin\Debug\netcoreapp2.2\GatewayApi.runtimeconfig.json
+C:\Portal\git\ConstructionEquipmentRental\GatewayApi\bin\Debug\netcoreapp2.2\GatewayApi.runtimeconfig.dev.json
+C:\Portal\git\ConstructionEquipmentRental\GatewayApi\bin\Debug\netcoreapp2.2\GatewayApi.dll
+C:\Portal\git\ConstructionEquipmentRental\GatewayApi\bin\Debug\netcoreapp2.2\GatewayApi.pdb
+C:\Portal\git\ConstructionEquipmentRental\GatewayApi\obj\Debug\netcoreapp2.2\GatewayApi.csproj.CoreCompileInputs.cache
+C:\Portal\git\ConstructionEquipmentRental\GatewayApi\obj\Debug\netcoreapp2.2\GatewayApi.RazorAssemblyInfo.cache
+C:\Portal\git\ConstructionEquipmentRental\GatewayApi\obj\Debug\netcoreapp2.2\GatewayApi.RazorAssemblyInfo.cs
+C:\Portal\git\ConstructionEquipmentRental\GatewayApi\obj\Debug\netcoreapp2.2\GatewayApi.AssemblyInfoInputs.cache
+C:\Portal\git\ConstructionEquipmentRental\GatewayApi\obj\Debug\netcoreapp2.2\GatewayApi.AssemblyInfo.cs
+C:\Portal\git\ConstructionEquipmentRental\GatewayApi\obj\Debug\netcoreapp2.2\GatewayApi.RazorTargetAssemblyInfo.cache
+C:\Portal\git\ConstructionEquipmentRental\GatewayApi\obj\Debug\netcoreapp2.2\GatewayApi.dll
+C:\Portal\git\ConstructionEquipmentRental\GatewayApi\obj\Debug\netcoreapp2.2\GatewayApi.pdb
+C:\Portal\git\ConstructionEquipmentRental\GatewayApi\obj\Debug\netcoreapp2.2\GatewayApi.csprojAssemblyReference.cache

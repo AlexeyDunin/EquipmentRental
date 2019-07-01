@@ -1,0 +1,14 @@
+C:\Portal\git\ConstructionEquipmentRental\Services\Pricing\bin\Debug\netcoreapp2.2\Pricing.deps.json
+C:\Portal\git\ConstructionEquipmentRental\Services\Pricing\bin\Debug\netcoreapp2.2\Pricing.runtimeconfig.json
+C:\Portal\git\ConstructionEquipmentRental\Services\Pricing\bin\Debug\netcoreapp2.2\Pricing.runtimeconfig.dev.json
+C:\Portal\git\ConstructionEquipmentRental\Services\Pricing\bin\Debug\netcoreapp2.2\Pricing.dll
+C:\Portal\git\ConstructionEquipmentRental\Services\Pricing\bin\Debug\netcoreapp2.2\Pricing.pdb
+C:\Portal\git\ConstructionEquipmentRental\Services\Pricing\obj\Debug\netcoreapp2.2\Pricing.csprojAssemblyReference.cache
+C:\Portal\git\ConstructionEquipmentRental\Services\Pricing\obj\Debug\netcoreapp2.2\Pricing.csproj.CoreCompileInputs.cache
+C:\Portal\git\ConstructionEquipmentRental\Services\Pricing\obj\Debug\netcoreapp2.2\Pricing.RazorAssemblyInfo.cache
+C:\Portal\git\ConstructionEquipmentRental\Services\Pricing\obj\Debug\netcoreapp2.2\Pricing.RazorAssemblyInfo.cs
+C:\Portal\git\ConstructionEquipmentRental\Services\Pricing\obj\Debug\netcoreapp2.2\Pricing.AssemblyInfoInputs.cache
+C:\Portal\git\ConstructionEquipmentRental\Services\Pricing\obj\Debug\netcoreapp2.2\Pricing.AssemblyInfo.cs
+C:\Portal\git\ConstructionEquipmentRental\Services\Pricing\obj\Debug\netcoreapp2.2\Pricing.RazorTargetAssemblyInfo.cache
+C:\Portal\git\ConstructionEquipmentRental\Services\Pricing\obj\Debug\netcoreapp2.2\Pricing.dll
+C:\Portal\git\ConstructionEquipmentRental\Services\Pricing\obj\Debug\netcoreapp2.2\Pricing.pdb

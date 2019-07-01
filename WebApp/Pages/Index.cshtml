@@ -1,0 +1,44 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Inventory";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Inventory catalog</h1>
+    @if (Model.Equipments.Any())
+    {
+        <table class="table">
+            @*Markup removed for brevity.*@
+
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.Equipments)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        <form method="post">
+                            <input type="hidden" name="Id" value="@item.Id" />
+                            <input type="hidden" name="Id" value="@item.Name" />
+                             @Html.ActionLink("Add to Cart", " ")
+                        </form>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    <p>@Model.Message</p>
+</div>
