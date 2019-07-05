@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Inventory";
 }
+@Html.AntiForgeryToken()
 
 <div class="text-center">
     <h1 class="display-4">Inventory catalog</h1>
@@ -15,30 +16,48 @@
                 <tr>
                     <th>Name</th>
                     <th>Type</th>
+                    <th>Rental Days</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-            @foreach (var item in Model.Equipments)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Type)
-                    </td>
-                    <td>
-                        <form method="post">
-                            <input type="hidden" name="Id" value="@item.Id" />
-                            <input type="hidden" name="Id" value="@item.Name" />
-                             @Html.ActionLink("Add to Cart", " ")
-                        </form>
-                    </td>
-                </tr>
-            }
+                @foreach (var item in Model.Equipments)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td>
+                            @Html.EditorFor(modelItem => item.RentalDays)
+                        </td>
+                        <td>
+                            <a onclick="addItem(@item.Id, @item.RentalDays)" href="#">Add To Card</a>
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     }
-    <p>@Model.Message</p>
+    <p id="panel">@Model.Message</p>
 </div>
+@section Scripts{
+    <script>
+        function addItem(id, rentalDays) {
+           var data = { "Id": id, "RentalDays": rentalDays};
+           return $.ajax({
+                type: "POST",
+                data: JSON.stringify(data),
+                url: '/Basket',
+                contentType: "application/json; charset=utf-8",
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                dataType: "json"
+            }).done(result => alert("Item added"));
+        }
+    </script>
+}
+

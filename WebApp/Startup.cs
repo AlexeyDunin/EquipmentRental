@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Polly;
 using WebApp.Services;
 using Polly.Extensions.Http;
+using WebApp.Repositories;
 
 namespace WebApp
 {
@@ -30,6 +31,7 @@ namespace WebApp
         {
             AddCustomMvc(services, Configuration);
             AddClients(services);
+            ResolveDependencies(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,7 +56,14 @@ namespace WebApp
         {
             services.Configure<AppSettings>(configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
             services.AddSession();
+
+        }
+
+        public static void ResolveDependencies(IServiceCollection services)
+        {
+            services.AddTransient<IInventoryRepository, InventoryRepository>();
         }
 
         public static void  AddClients(IServiceCollection services)

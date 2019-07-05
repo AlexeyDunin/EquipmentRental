@@ -1,5 +1,5 @@
-using System;
-using WebApp.Models;
+
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.ViewModels
 {
@@ -8,5 +8,6 @@ namespace WebApp.ViewModels
         public int Id { get; set; }
         public string Name { get; set; }
         public InventoryType Type { get; set; }
+        public uint RentalDays { get; set; } 
     }
 }

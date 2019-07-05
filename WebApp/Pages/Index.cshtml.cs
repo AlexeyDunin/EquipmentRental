@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json.Linq;
 using WebApp.Models;
+using WebApp.Repositories;
 using WebApp.Services;
 using WebApp.ViewModels;
 
@@ -12,26 +14,16 @@ namespace WebApp.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly IInventoryService _inventoryService;
+        private readonly IInventoryRepository _inventoryRepository;
 
-        public IndexModel(IInventoryService inventoryService) => _inventoryService = inventoryService;
+        public IndexModel(IInventoryRepository inventoryRepository) => _inventoryRepository = inventoryRepository;
 
         public List<InventoryModel> Equipments { get; set; }
         public string  Message { get; set; }
 
         public void OnGet()
         {
-            Equipments = _inventoryService.GetItems();
-        }
-
-        public IActionResult OnPost(InventoryModel inventoryItemViewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-            Message = "Ok";
-            return Page();
+            Equipments = _inventoryRepository.Inventory;
         }
     }
 }
