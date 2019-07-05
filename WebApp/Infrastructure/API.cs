@@ -9,7 +9,12 @@ namespace WebApp.Infrastructure
     {
         public static class Inventory
         {
-            public static string GetAllCatalogItems(string baseUrl) => $"{baseUrl}/inventory";
+            public static string GetAllCatalogItems(string apiUrl) => $"{apiUrl}/inventory";
+        }
+
+        public static class Basket
+        {
+            public static string GetAllBaskets(string apiUrl) => $"{apiUrl}/basket";
         }
     }
 }

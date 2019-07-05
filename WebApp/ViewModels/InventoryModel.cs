@@ -1,6 +1,3 @@
-
-using System.ComponentModel.DataAnnotations;
-
 namespace WebApp.ViewModels
 {
     public class InventoryModel

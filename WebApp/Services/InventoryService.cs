@@ -20,7 +20,7 @@ namespace WebApp.Services
             _httpClient = httpClient;
             _logger = logger;
 
-            _remoteServiceBaseUrl = $"{settings.Value.InventoryUrl}/api/v1";
+            _remoteServiceBaseUrl = $"{settings.Value.BaseUrl}/api/v1";
         }
 
         public  List<InventoryModel> GetItems()

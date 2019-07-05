@@ -19,6 +19,9 @@ namespace GatewayApi
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((host, config) => {
+                    config.AddJsonFile("routes.json");
+                })
                 .UseStartup<Startup>();
     }
 }
