@@ -14,7 +14,8 @@ namespace WebApp.Infrastructure
 
         public static class Basket
         {
-            public static string GetAllBaskets(string apiUrl) => $"{apiUrl}/basket";
+            public static string GetBasket(string baseUri, string basketId) => $"{baseUri}/{basketId}";
+            public static string UpdateBasket(string baseUri) => baseUri;
         }
     }
 }

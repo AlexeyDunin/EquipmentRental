@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -8,41 +9,43 @@ using WebApp.ViewModels;
 
 namespace WebApp.Services
 {
-    public class BasketService 
+    public class BasketService : IBasketService
     {
         private readonly HttpClient _httpClient;
-        private readonly ILogger<InventoryService> _logger;
+        private readonly ILogger<BasketService> _logger;
 
-        private readonly string _remoteServiceBaseUrl;
+        private readonly string _basketUrl;
 
-        public BasketService(HttpClient httpClient, ILogger<InventoryService> logger, IOptions<AppSettings> settings)
+        public BasketService(HttpClient httpClient, ILogger<BasketService> logger, IOptions<AppSettings> settings)
         {
             _httpClient = httpClient;
             _logger = logger;
 
-            _remoteServiceBaseUrl = $"{settings.Value.BaseUrl}/api/v1";
+            _basketUrl = $"{settings.Value.BaseUrl}/api/v1/basket";
         }
 
-        public List<InventoryModel> GetBaskets()
+        public async Task<BasketViewModel> GetBasket(string id)
         {
-            var uri = Api.Inventory.GetAllCatalogItems(_remoteServiceBaseUrl);
+            var uri = Api.Basket.GetBasket(_basketUrl, id);
 
-            var responseString = _httpClient.GetStringAsync(uri);
+            var responseString = await _httpClient.GetStringAsync(uri);
 
-            var catalog = JsonConvert.DeserializeObject<List<InventoryModel>>(responseString.Result);
-
-            return catalog;
+            return string.IsNullOrEmpty(responseString) ?
+                new BasketViewModel { Id = id } :
+                JsonConvert.DeserializeObject<BasketViewModel>(responseString);
         }
 
-        public List<InventoryModel> GetBasketById()
+        public async Task<BasketViewModel> UpdateBasket(BasketViewModel basket)
         {
-            var uri = Api.Inventory.GetAllCatalogItems(_remoteServiceBaseUrl);
+            var uri = Api.Basket.UpdateBasket(_basketUrl);
 
-            var responseString = _httpClient.GetStringAsync(uri);
+            var basketContent = new StringContent(JsonConvert.SerializeObject(basket), System.Text.Encoding.UTF8, "application/json");
 
-            var catalog = JsonConvert.DeserializeObject<List<InventoryModel>>(responseString.Result);
+            var response = await _httpClient.PostAsync(uri, basketContent);
 
-            return catalog;
+            response.EnsureSuccessStatusCode();
+
+            return basket;
         }
     }
 }

@@ -1,0 +1,9 @@
+﻿@page
+@model WebApp.Pages.InvoiceModel
+@{
+    ViewData["Title"] = "Invoice";
+}
+<div class="text-center">
+    <h1 class="display-4">Invoice details</h1>
+    <p>Count of inventory items: @Model.Basket?.Items.Count</p>
+</div>

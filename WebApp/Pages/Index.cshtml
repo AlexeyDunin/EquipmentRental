@@ -1,4 +1,5 @@
 ﻿@page
+@using Microsoft.AspNetCore.Mvc.Rendering
 @model IndexModel
 @{
     ViewData["Title"] = "Inventory";
@@ -13,51 +14,59 @@
             @*Markup removed for brevity.*@
 
             <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Rental Days</th>
-                    <th></th>
-                </tr>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Rental Days</th>
+                <th></th>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.Equipments)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Type)
-                        </td>
-                        <td>
-                            @Html.EditorFor(modelItem => item.RentalDays)
-                        </td>
-                        <td>
-                            <a onclick="addItem(@item.Id, @item.RentalDays)" href="#">Add To Card</a>
-                        </td>
-                    </tr>
-                }
+            @foreach (var item in Model.Equipments)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.EditorFor(modelItem => item.RentalDays, new { htmlAttributes = new { id = $"{nameof(item.RentalDays)}_{item.Id}" } })
+                    </td>
+                    <td>
+                        <a onclick="addItem(@item.Id)" href="#">Add To Card</a>
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
     }
-    <p id="panel">@Model.Message</p>
 </div>
+<div>
+    <a class="btn btn-outline-dark btn-lg btn-block" asp-area="" asp-page="/Invoice">Get an Invoice</a>
+</div>
+<div id="message">
+   
+</div>
+
 @section Scripts{
     <script>
-        function addItem(id, rentalDays) {
-           var data = { "Id": id, "RentalDays": rentalDays};
-           return $.ajax({
+        function addItem(id) {
+            var data = { "Id": id, "RentalDays": $("#RentalDays_" + id).val() };
+            return $.ajax({
                 type: "POST",
                 data: JSON.stringify(data),
-                url: '/Basket',
+                url: '/shared/_basket',
                 contentType: "application/json; charset=utf-8",
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val());
                 },
-                dataType: "json"
-            }).done(result => alert("Item added"));
+                dataType: "json",
+                success: function (response) {
+                    $("#message").html("Test");
+                }
+            });
         }
     </script>
 }
-
