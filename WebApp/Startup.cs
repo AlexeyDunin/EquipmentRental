@@ -78,6 +78,10 @@ namespace WebApp
             services.AddHttpClient<IBasketService, BasketService>()
                 .AddPolicyHandler(GetRetryPolicy())
                 .AddPolicyHandler(GetCircuitBreakerPolicy());
+
+            services.AddHttpClient<IInvoiceService, InvoiceService>()
+                .AddPolicyHandler(GetRetryPolicy())
+                .AddPolicyHandler(GetCircuitBreakerPolicy());
         }
 
         static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()

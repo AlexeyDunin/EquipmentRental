@@ -17,5 +17,10 @@ namespace WebApp.Infrastructure
             public static string GetBasket(string baseUri, string basketId) => $"{baseUri}/{basketId}";
             public static string UpdateBasket(string baseUri) => baseUri;
         }
+
+        public static class Invoice
+        {
+            public static string GetInvoice(string baseUri) => $"{baseUri}/invoice";
+        }
     }
 }

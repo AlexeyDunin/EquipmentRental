@@ -13,15 +13,15 @@ namespace WebApp.Pages.Shared
     {
         private readonly IBasketService _basketService;
         public BasketModel(IBasketService basketService) => _basketService = basketService;
-        
+        private const string UserId = "777";
         public async Task OnPost([FromBody] ItemModel item)
         {
-            var basket = await _basketService.GetBasket(HttpContext.Connection.Id);
+            var basket = await _basketService.GetBasket(UserId);
             basket.Items.Add(item);
 
             await _basketService.UpdateBasket(new BasketViewModel
             {
-                Id = HttpContext.Connection.Id,
+                Id = UserId,
                 Items = basket.Items
             });
         }

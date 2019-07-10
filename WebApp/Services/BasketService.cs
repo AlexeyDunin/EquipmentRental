@@ -47,5 +47,15 @@ namespace WebApp.Services
 
             return basket;
         }
+
+        public async Task<BasketViewModel> DeleteBasket(string id)
+        {
+            var uri = Api.Basket.GetBasket(_basketUrl, id);
+
+            var responseString = await _httpClient.GetStringAsync(uri);
+
+            return string.IsNullOrEmpty(responseString) ? null :
+                JsonConvert.DeserializeObject<BasketViewModel>(responseString);
+        }
     }
 }

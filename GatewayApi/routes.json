@@ -32,6 +32,17 @@
         }
       ],
       "UpstreamPathTemplate": "/api/v1/basket"
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/invoice",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7003
+        }
+      ],
+      "UpstreamPathTemplate": "/api/v1/invoice"
     }
   ],
   "GlobalConfiguration": {
