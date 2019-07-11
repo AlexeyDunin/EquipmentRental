@@ -3,34 +3,50 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
+using Basket.Models;
 
 namespace Basket.Repositories
 {
     public class BasketRepository : IBasketRepository
     {
-        private static ConcurrentDictionary<string, Models.BasketModel> _repository;
+        private static ConcurrentDictionary<string, BasketModel> _repository;
 
         public BasketRepository()
         {
             if(_repository == null)
-                _repository = new ConcurrentDictionary<string, Models.BasketModel>();
+                _repository = new ConcurrentDictionary<string, BasketModel>();
         }
 
-        public async Task<Models.BasketModel> GetBasketAsync(string id)
+        public async Task<BasketModel> GetBasketAsync(string id)
         {
-            var basket = new Models.BasketModel(id);
+            var basket = new BasketModel(id);
             return _repository.GetOrAdd(id, key => basket);
         }
 
-        public async Task<Models.BasketModel> UpdateBasketAsync(Models.BasketModel value)
+        public async Task<BasketModel> UpdateBasketAsync(BasketModel value)
         {
             var success = false;
             if (_repository.TryGetValue(value.Id, out var basket))
             {
-                success = _repository.TryUpdate(value.Id, value, basket);
+                success = _repository.TryUpdate(value.Id, GetMergedBasketModel(value), basket);
             }
 
             return success ? value : null;
+        }
+
+        private BasketModel GetMergedBasketModel(BasketModel value)
+        {
+            value.Items = value.Items.Select(_ => _.Id)
+                .Distinct()
+                .Select(i => new Item
+                {
+                    Id = i,
+                    RentalDays = value.Items
+                        .Where(_ => _.Id.Equals(i))
+                        .Select(v => v.RentalDays).Sum()
+                })
+                .ToList();
+            return value;
         }
 
         public async Task<bool> DeleteBasketAsync(string id)

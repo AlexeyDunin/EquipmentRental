@@ -17,6 +17,7 @@ namespace WebApp.Pages.Shared
         public async Task OnPost([FromBody] ItemModel item)
         {
             var basket = await _basketService.GetBasket(UserId);
+
             basket.Items.Add(item);
 
             await _basketService.UpdateBasket(new BasketViewModel

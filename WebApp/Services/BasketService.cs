@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -38,7 +39,6 @@ namespace WebApp.Services
         public async Task<BasketViewModel> UpdateBasket(BasketViewModel basket)
         {
             var uri = Api.Basket.UpdateBasket(_basketUrl);
-
             var basketContent = new StringContent(JsonConvert.SerializeObject(basket), System.Text.Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync(uri, basketContent);

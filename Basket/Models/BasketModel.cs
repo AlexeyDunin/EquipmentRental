@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Basket.Models
 {
@@ -11,6 +12,16 @@ namespace Basket.Models
         {
             Id = id;
             Items = new List<Item>();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is BasketModel compareWith))
+            {
+                return false;
+            }
+            
+            return Id == compareWith.Id && (Items.Count == compareWith.Items.Count) && !Items.Except(compareWith.Items).Any();
         }
     }
 }
