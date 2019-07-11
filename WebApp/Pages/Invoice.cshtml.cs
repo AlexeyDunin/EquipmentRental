@@ -18,7 +18,10 @@ namespace WebApp.Pages
         private readonly IInvoiceService _invoiceService;
         private readonly IInventoryRepository _inventoryRepository;
 
-        public InvoiceModel(IBasketService basketService, IInvoiceService invoiceService, IInventoryRepository inventoryRepository)
+        public InvoiceModel(
+            IBasketService basketService,
+            IInvoiceService invoiceService,
+            IInventoryRepository inventoryRepository)
         {
             _basketService = basketService;
             _invoiceService = invoiceService;
@@ -40,18 +43,12 @@ namespace WebApp.Pages
                 inventoryList.Add(inventory);
             }
 
-            if (inventoryList.Any())
-            {
-                // convert string to stream
-                var result = await _invoiceService.GetInvoice(inventoryList).Result.ReadAsStreamAsync();
-                await _basketService.DeleteBasket(Basket.Id);
+            if (!inventoryList.Any()) return Page();
 
-                return File(result, "application/txt", "invoice.txt");
-            }
+            var result = await _invoiceService.GetInvoice(inventoryList).Result.ReadAsStreamAsync();
+            _basketService.DeleteBasket(Basket.Id);
 
-            throw new ApplicationException("Basket is empty");
-
-           
+            return File(result, "application/txt", "invoice.txt");
         }
     }
 }

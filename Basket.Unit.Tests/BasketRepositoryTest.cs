@@ -21,7 +21,7 @@ namespace Basket.Unit.Tests
         }
 
         [Fact]
-        public async Task<BasketModel> Get_basket_first_time()
+        public async Task<BasketModel> Get_Add_basket()
         {
             //Arrange
             var basketId = "test";
@@ -39,7 +39,7 @@ namespace Basket.Unit.Tests
         public async Task<BasketModel> Update_existing_basket()
         {
             //Arrange
-            var existingBasket = await Get_basket_first_time();
+            var existingBasket = await Get_Add_basket();
             existingBasket.Items.Add(new Item {Id = 7, RentalDays = 7});
 
             //Act
@@ -69,6 +69,22 @@ namespace Basket.Unit.Tests
             Assert.Single(actualBasket.Items);
             Assert.Equal(7, actualBasket.Items[0].Id);
             Assert.Equal(10, actualBasket.Items[0].RentalDays);
+        }
+
+        [Fact]
+        public async Task Delete_existing_basket()
+        {
+            //Arrange
+            var existingBasket = await Update_existing_basket();
+
+            //Act
+            var deletedBasketResult = await _basketRepository.DeleteBasketAsync(existingBasket.Id);
+
+            //Assert
+            Assert.True(deletedBasketResult);
+            var actualBasket = await _basketRepository.GetBasketAsync(existingBasket.Id);
+            Assert.NotNull(actualBasket);
+            Assert.NotEqual(actualBasket, existingBasket);
         }
     }
 }

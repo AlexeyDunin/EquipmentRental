@@ -48,14 +48,12 @@ namespace WebApp.Services
             return basket;
         }
 
-        public async Task<BasketViewModel> DeleteBasket(string id)
+        public async void DeleteBasket(string id)
         {
             var uri = Api.Basket.GetBasket(_basketUrl, id);
+            var response = await _httpClient.DeleteAsync(uri);
 
-            var responseString = await _httpClient.GetStringAsync(uri);
-
-            return string.IsNullOrEmpty(responseString) ? null :
-                JsonConvert.DeserializeObject<BasketViewModel>(responseString);
+            response.EnsureSuccessStatusCode();
         }
     }
 }

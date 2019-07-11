@@ -2,12 +2,12 @@
 @using Microsoft.AspNetCore.Mvc.Rendering
 @model IndexModel
 @{
-    ViewData["Title"] = "Inventory";
+    ViewData["Title"] = "Catalog";
 }
 @Html.AntiForgeryToken()
 
 <div class="text-center">
-    <h1 class="display-4">Inventory catalog</h1>
+    <h1 class="display-4">Inventory Equipment Catalog</h1>
     @if (Model.Equipments.Any())
     {
         <table class="table">

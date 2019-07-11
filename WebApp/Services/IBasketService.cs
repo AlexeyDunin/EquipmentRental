@@ -7,6 +7,6 @@ namespace WebApp.Services
     {
         Task<BasketViewModel> GetBasket(string id);
         Task<BasketViewModel> UpdateBasket(BasketViewModel basket);
-        Task<BasketViewModel> DeleteBasket(string id);
+        void DeleteBasket(string id);
     }
 }
