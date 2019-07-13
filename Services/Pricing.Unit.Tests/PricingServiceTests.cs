@@ -9,12 +9,9 @@ namespace Pricing.Unit.Tests
 {
     public class PricingServiceTests
     {
+
         private readonly IPricingService _pricingService;
         private string SettingPath => Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
-
-        private const int OneTimeFee = 100;
-        private const int PremiumDailyFee = 60;
-        private const int RegularDailyFee = 40;
 
         public PricingServiceTests()
         {
@@ -23,21 +20,54 @@ namespace Pricing.Unit.Tests
             _pricingService = new PricingService(settings);
         }
 
-        /*
-            There are three different fees:
-            • One-time rental fee – 100€
-            • Premium daily fee – 60€/day
-            • Regular daily fee – 40€/day
+        private const int OneTimeFee = 100;
+        private const int PremiumDailyFee = 60;
+        private const int RegularDailyFee = 40;
 
-            The price calculation for different types of equipment is:
-            • Heavy – rental price is one-time rental fee plus premium fee for each day rented.
-            • Regular – rental price is one-time rental fee plus premium fee for the first 2 days each plus regular fee for the number of days over 2.
-            • Specialized – rental price is premium fee for the first 3 days each plus regular fee times the number of days over 3.
-        */
+        // xUnit has a issue when inline data is an enum https://github.com/xunit/xunit/issues/1971
+
+        // Heavy – rental price is one-time rental fee plus premium fee for each day rented.
+        [Theory]
+        [InlineData(1, OneTimeFee + PremiumDailyFee)]
+        [InlineData(3, OneTimeFee + 3 * PremiumDailyFee)]
+        public void GetPrice_Heavy(int rentalDays, int expectedPrice)
+        {
+            GetPriceAssertion(InventoryType.Heavy, rentalDays, expectedPrice);
+        }
+
+        // Regular – rental price is one-time rental fee plus premium fee for the first 2 days each plus regular fee for the number of days over 2.
+        [Theory]
+        [InlineData(2, OneTimeFee + 2 * PremiumDailyFee)]
+        [InlineData(5, OneTimeFee + 2 * PremiumDailyFee + 3 * RegularDailyFee)]
+        public void GetPrice_Regular(int rentalDays, int expectedPrice)
+        {
+            GetPriceAssertion(InventoryType.Regular, rentalDays, expectedPrice);
+        }
+
+        // Specialized – rental price is premium fee for the first 3 days each plus regular fee times the number of days over 3.
+        [Theory]
+        [InlineData(1, 1 * PremiumDailyFee)]
+        [InlineData(4, 3 * PremiumDailyFee + 1 * RegularDailyFee)]
+        public void GetPrice_Specialized(int rentalDays, int expectedPrice)
+        {
+            GetPriceAssertion(InventoryType.Specialized, rentalDays, expectedPrice);
+        }
 
         [Theory]
-        [InlineData(InventoryType.Heavy, 0, 0)]
-        public void GetPrice(InventoryType inventoryType, int rentalDays, int expectedPrice)
+        [InlineData(0, 0)]
+        public void GetPrice_When_RentalDays_Is_Zero(int rentalDays, int expectedPrice)
+        {
+            GetPriceAssertion(InventoryType.Specialized, rentalDays, expectedPrice);
+        }
+
+        [Theory]
+        [InlineData(-1, 0)]
+        public void GetPrice_When_RentalDays_Is_Negative(int rentalDays, int expectedPrice)
+        {
+            GetPriceAssertion(InventoryType.Specialized, rentalDays, expectedPrice);
+        }
+
+        private void GetPriceAssertion(InventoryType inventoryType, int rentalDays, int expectedPrice)
         {
             var actualPrice = _pricingService.GetPrice(new InventoryModel
             {
@@ -47,5 +77,7 @@ namespace Pricing.Unit.Tests
 
             Assert.Equal(expectedPrice, actualPrice);
         }
+
     }
 }
+

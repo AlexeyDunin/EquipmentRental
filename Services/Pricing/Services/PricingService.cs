@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Pricing.Models;
 
 namespace Pricing.Services
@@ -11,10 +12,18 @@ namespace Pricing.Services
         private int _regularDays;
         private int _oneTimeFee;
 
-        public PricingService(IOptions<AppSettings> settings) => _settings = settings;
+        public PricingService(
+            IOptions<AppSettings> settings)
+        {
+            _settings = settings;
+        } 
 
         public int GetPrice(InventoryModel inventory)
         {
+            if (inventory.RentalDays == 0) return 0;
+
+            if (inventory.RentalDays < 0) return 0;
+
             Init(inventory.Type, inventory.RentalDays);
             return _oneTimeFee +
                    _premiumDays * _settings.Value.PremiumDailyFee +
