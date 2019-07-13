@@ -17,7 +17,10 @@ namespace WebApp.Services
 
         private readonly string _basketUrl;
 
-        public BasketService(HttpClient httpClient, ILogger<BasketService> logger, IOptions<AppSettings> settings)
+        public BasketService(
+            HttpClient httpClient, 
+            ILogger<BasketService> logger, 
+            IOptions<AppSettings> settings)
         {
             _httpClient = httpClient;
             _logger = logger;

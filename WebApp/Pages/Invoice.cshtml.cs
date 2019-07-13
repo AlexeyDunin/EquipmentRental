@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Options;
 using WebApp.Repositories;
 using WebApp.Services;
 using WebApp.ViewModels;
@@ -17,21 +15,24 @@ namespace WebApp.Pages
         private readonly IBasketService _basketService;
         private readonly IInvoiceService _invoiceService;
         private readonly IInventoryRepository _inventoryRepository;
+        private readonly IOptions<AppSettings> _settings;
 
         public InvoiceModel(
             IBasketService basketService,
             IInvoiceService invoiceService,
-            IInventoryRepository inventoryRepository)
+            IInventoryRepository inventoryRepository,
+            IOptions<AppSettings> settings)
         {
             _basketService = basketService;
             _invoiceService = invoiceService;
             _inventoryRepository = inventoryRepository;
+            _settings = settings;
         }
         public BasketViewModel Basket { get; set; }
 
         public async Task<IActionResult> OnGet()
         {
-            Basket = await _basketService.GetBasket("777");
+            Basket = await _basketService.GetBasket(_settings.Value.UserId);
 
             var inventoryList = new List<InventoryModel>();
 
