@@ -7,7 +7,7 @@
 @Html.AntiForgeryToken()
 
 <div class="text-center">
-    <h1 class="display-4">Inventory Equipment Catalog</h1>
+    <h1 class="display-4">Equipment Inventory Catalog</h1>
     @if (Model.Equipments.Any())
     {
         <table class="table">
@@ -65,6 +65,7 @@
 
             if (rentalDays < 0) {
                 alert("Rental days could not be negative!");
+                return;
             }
 
             var data = { "Id": id, "RentalDays": rentalDays };
