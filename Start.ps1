@@ -46,7 +46,6 @@ Start-Job -Name "launch browser" -ScriptBlock {
     }
 
     do{
-
         Start-Sleep -Seconds 5       
     }while(-not (Test-Port -Address localhost -Port 5000))
     
