@@ -25,5 +25,8 @@ namespace WebApp.Pages
         {
             Equipments = _inventoryRepository.Inventory;
         }
+
+        public IActionResult OnGetPartial() =>
+            Partial("_Basket");
     }
 }

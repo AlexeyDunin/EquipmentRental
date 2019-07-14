@@ -1,7 +1,7 @@
 {
   "ReRoutes": [
     {
-      "DownstreamPathTemplate": "/api/v1/inventory",
+      "DownstreamPathTemplate": "/api/{version}/inventory",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -9,7 +9,40 @@
           "Port": 7001
         }
       ],
-      "UpstreamPathTemplate": "/api/v1/inventory"
+      "UpstreamPathTemplate": "/api/{version}/inventory"
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/basket/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7002
+        }
+      ],
+      "UpstreamPathTemplate": "/api/v1/basket/{everything}"
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/basket",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7002
+        }
+      ],
+      "UpstreamPathTemplate": "/api/v1/basket"
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/invoice",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7003
+        }
+      ],
+      "UpstreamPathTemplate": "/api/v1/invoice"
     }
   ],
   "GlobalConfiguration": {
