@@ -17,21 +17,18 @@ namespace Basket.Controllers
         public BasketController(IBasketRepository basketRepository) => _repository = basketRepository;
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(Models.BasketModel), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Models.BasketModel>> GetBasketByIdAsync(string id)
         {
             return Ok(await _repository.GetBasketAsync(id));
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(Models.BasketModel), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Models.BasketModel>> UpdateBasketAsync([FromBody]Models.BasketModel value)
         {
             return Ok(await _repository.UpdateBasketAsync(value));
         }
 
         [HttpDelete("{id}")]
-        [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
         public async Task DeleteBasketByIdAsync(string id)
         {
             await _repository.DeleteBasketAsync(id);

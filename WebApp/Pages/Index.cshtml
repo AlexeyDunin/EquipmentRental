@@ -24,9 +24,10 @@
             <tbody>
             @foreach (var item in Model.Equipments)
             {
+                item.RentalDays = item.RentalDays == 0 ? 1 : item.RentalDays;
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
+                    <td id="@nameof(item.Name)_@item.Id">
+                        @Html.DisplayFor(modelItem => item.Name, new { htmlAttributes = new { id = $"{nameof(item.Name)}_{item.Id}" } })
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Type)
@@ -48,11 +49,27 @@
     <a class="btn btn-outline-dark btn-lg btn-block" asp-area="" asp-page="/Invoice">Get an Invoice</a>
 </div>
 
+<div>
+    <br>
+</div>
+
+<div id="messageBlock" class="alert alert-success" role="alert" hidden="">
+    <h4 class="alert-heading" id="message"></h4>
+</div>
+
+
 @section Scripts{
     <script>
         function addItem(id) {
-            var data = { "Id": id, "RentalDays": $("#RentalDays_" + id).val() };
-            return $.ajax({
+            var rentalDays = $("#RentalDays_" + id).val();
+
+            if (rentalDays < 0) {
+                alert("Rental days could not be negative!");
+            }
+
+            var data = { "Id": id, "RentalDays": rentalDays };
+
+            $.ajax({
                 type: "POST",
                 data: JSON.stringify(data),
                 url: '/shared/_basket',
@@ -61,8 +78,13 @@
                     xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val());
                 },
                 dataType: "json",
-                success: function (response) {
-                    $("#message").html("Test");
+                error: function (error) {
+                    $("#message").html(JSON.stringify(error));
+                },
+                complete: function() {
+                    var inventoryName = document.getElementById("Name_" + id).innerHTML.replace(/<[^>]*>/g, "");
+                    $("#message").html(rentalDays + " rental day(s) for " + inventoryName + " added successfully!");
+                    $("#messageBlock").removeAttr('hidden');
                 }
             });
         }
